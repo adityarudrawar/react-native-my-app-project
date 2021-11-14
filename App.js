@@ -1,13 +1,42 @@
-import { StatusBar } from 'expo-status-bar';
+import { AntDesign } from '@expo/vector-icons';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { HomeScreen } from './screens/HomeScreen';
+import { SaveScreen } from './screens/SaveScreen'
+import { YoutubeScreen } from './screens/YoutubeScreen';
 
 export default function App() {
+  
+  const Tap = createBottomTabNavigator();
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Tap.Navigator>
+        <Tap.Screen
+          name="Home"
+          options={{
+            tabBarIcon:()=>(<AntDesign name="home" size={24} color="black" />)
+          }}
+          component={HomeScreen}
+        ></Tap.Screen>
+        <Tap.Screen
+          name="Saved"
+          options={{
+            tabBarIcon:()=>(<AntDesign name="home" size={24} color="black" />)
+          }}
+          component={SaveScreen}
+        ></Tap.Screen>
+        <Tap.Screen
+          name="Youtube"
+          options={{
+            tabBarIcon:()=>(<AntDesign name="home" size={24} color="black" />)
+          }}
+          component={YoutubeScreen}
+        ></Tap.Screen>
+      </Tap.Navigator>
+    </NavigationContainer>
   );
 }
 
