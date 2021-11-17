@@ -55,6 +55,7 @@ export let getComments = async (documentId) => {
 export let addComments = async (documentId, comment) => {
   // console.log("getComment function: ", documentId)
   // Generate a auto id for the comment doc.
+  console.log("addComments FUNCTION", comment);
   await setDoc(doc(firestore, "Comments", generateString(20)), {
     title: comment,
     postid: documentId

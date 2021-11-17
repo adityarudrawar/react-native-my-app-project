@@ -27,9 +27,13 @@ export const getSavedPosts = async () =>{
 
 export const savePost = async (documentId) =>{
     let savedPosts = await getSavedPosts();
+    if(savedPosts.includes(documentId)){
+        console.log("Post already saved.")
+    }
+    else{
     savedPosts.push(documentId);
     await storeData(savedPosts);
-    console.log("Posts Saved.")
+    console.log("Posts Saved.")}
 }
 
 
@@ -38,7 +42,7 @@ export const savePost = async (documentId) =>{
 export const unSavePost = async (documentId) =>{
     let savedPosts = await getSavedPosts();
     
-    const index = array.indexOf(documentId);
+    const index = savedPosts.indexOf(documentId);
     if (index > -1) {
         savedPosts.splice(index, 1);
     }
