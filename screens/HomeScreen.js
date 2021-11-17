@@ -9,14 +9,14 @@ import * as firebaseFunctions from '../src/FirebaseApi.js'
 
 
 export function HomeScreen(props){
-    
-    const getData = async()=> {
-        let temp = await firebaseFunctions.getCitiesSnapshot()
-        setPanels(temp)
-    }
+  
+  const [panels, setPanels] = useState([]);
 
-    const [panels, setPanels] = useState([]);
-    
+  const getData = async()=> {
+        let temp = await firebaseFunctions.getPostsSnapshot()
+        setPanels(temp)
+  }
+
     return(
     <View>
        <KeyboardAvoidingView behavior="padding">
@@ -47,17 +47,20 @@ export function HomeScreen(props){
   }
 
   function SavePost(props){
-    const saveThisPost = async(documentId)=>{
+    const [postSaved, setPostSaveStatus] = useState(false);
+
+    const saveThisPost = async(documentId)=>{  
       await savePost(documentId)
+      alert("Post Saved");
+      setPostSaveStatus(true);
     }
-    return(
+    return(!postSaved)?(
       <View>
         <Button
         title="Save this Post"
         onPress={()=>saveThisPost(props.docID)}
         ></Button>
-      </View>
-    )
+      </View>):null;
   }
   function Popup(props){
     console.log("Printing CHILD");    
@@ -130,7 +133,7 @@ export function HomeScreen(props){
 
   function CommentSection(props){
       const [buttonPopup, setButtonPopup] = useState(false);
-    console.log("Printing PARENT");
+    console.log("Printing PARENT for DOC ID", props.docID);
       return(
           <View>
                 <Text>{props.docID}</Text>
@@ -149,7 +152,6 @@ export function HomeScreen(props){
             </View>
       )
     }
-
 
 function Title(props){
     return(

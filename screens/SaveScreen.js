@@ -4,37 +4,46 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Button } from 'react-native-elements';
 import { getSavedPosts, savePost, storeData }from '../src/Stoarge';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as firebaseFunctions from '../src/FirebaseApi.js'
+
 
 export function SaveScreen(props){
+    const [savedPostsId, setSavedPostsId] = useState([]);
     const [savedPosts, setSavedPosts] = useState([]);
-    
-
-    useEffect(async()=>{
-      const result = await AsyncStorage.getItem("@storage_Key")
-      setSavedPosts(result) 
-    },[savedPosts])
-
 
     const getPosts = async()=>{
       const result = await AsyncStorage.getItem("@storage_Key")
-      setSavedPosts(result)
-    }
+      
+      setSavedPostsId(result)
+      console.log("Saved Posts in Async Storage", result)
+
+      let temp = await firebaseFunctions.getPostsFromList(result)
+      
+      setSavedPosts(temp)
+
+      console.log("Saved Posts from Firebase",temp)
+    };
+
+
     return(
       <View>
         <Text>
-           {savedPosts}
+           {savedPostsId}
         </Text>
         <Button
         title="REFRESH TO GET POSTS"
-        style={styles.button}
+        // style={styles.button}
+        style={{width: 420, height: 50}}
         onPress={()=>getPosts()}
-        ></Button>
+        />
 
         <Button
           title="DEMO DELETE SAVED POSTS"
           style={styles.button}
           onPress={()=>storeData([])}
-        ></Button>
+        />
+
+        
       </View>
     );
 }

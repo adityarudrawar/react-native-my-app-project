@@ -19,15 +19,13 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const firestore = getFirestore();
 
-export let getCitiesSnapshot = async () =>{
+export let getPostsSnapshot = async () =>{
     let tempArray = []
     let querySnapshot = await getDocs(collection(firestore, "Posts"));
     
     let i = 0
     querySnapshot.forEach((doc)=>{
-            console.log( doc.id);
-              if (doc.id == "lFfHBXZvdA0M8IPMieOF")
-                tempArray.push({
+            tempArray.push({
                         title: doc.data().title, 
                         body: doc.data().body, 
                         id: i,
@@ -63,6 +61,26 @@ export let addComments = async (documentId, comment) => {
   });
 }
 
+export const getPostsFromList = async(listOfDocuments) =>{
+  let tempArray = []
+  let querySnapshot = await getDocs(collection(firestore, "Posts"));
+  let i = 0
+  querySnapshot.forEach((doc)=>{
+    console.log( doc.id);
+    if (listOfDocuments.includes(doc.id)){
+        tempArray.push({
+                        title: doc.data().title, 
+                        body: doc.data().body, 
+                        id: i,
+                        documentId: doc.id
+                        })
+      i = i + 1
+    } else{
+      console.log(doc.id, "Not saved")
+    }
+          })
+}
+
 
 const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
@@ -75,6 +93,12 @@ function generateString(length) {
 
     return result;
 }
+
+
+
+
+
+
 
 console.log(generateString(5));
 

@@ -1,0 +1,5 @@
+1. Border Radius
+2. UI elements.
+3. Colour Grading/Combinations.
+4. Splash Screen.
+5. Drop Shadow.

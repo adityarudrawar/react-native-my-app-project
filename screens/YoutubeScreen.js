@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Button } from 'react-native-elements';
 
 const API_KEY = "AIzaSyBpTB6k92gzBxlXqkDjHo3f8BC9GiGWeLc"
+
 const NavalChannelID = "UCh_dVD10YuSghle8g6yjePg"
 
 export function YoutubeScreen(props){
@@ -33,7 +34,7 @@ export function YoutubeScreen(props){
         }
         const result2 = await response2.json();
         console.log("Uploads Result",result2)
-      
+
       };
       
     
@@ -41,7 +42,6 @@ export function YoutubeScreen(props){
     
     return(
     <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
         <Button
           title="Get Naval Ravikant data"
           style={styles.button}
