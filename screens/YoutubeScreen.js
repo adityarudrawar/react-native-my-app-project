@@ -1,15 +1,18 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import { FlatList, StyleSheet, Text, View, Linking } from 'react-native';
 import { Button } from 'react-native-elements';
+import { Tiles } from '../components/Tiles';
 
 const API_KEY = "AIzaSyBpTB6k92gzBxlXqkDjHo3f8BC9GiGWeLc"
 
-const NavalChannelID = "UCh_dVD10YuSghle8g6yjePg"
+const NavalChannelID = 'UCh_dVD10YuSghle8g6yjePg'
 
 export function YoutubeScreen(props){
-    
-    const getChannelData = async(channelid) => {
+  
+    const [data, setData] = useState(null);
+
+    const getChannelData =  async(channelid) => {
         const queryChannel = "https://www.googleapis.com/youtube/v3/channels?id=" + channelid+ "&key=" + API_KEY+ "&part=contentDetails";
         console.log(queryChannel)
         const response = await fetch(queryChannel);
@@ -20,7 +23,7 @@ export function YoutubeScreen(props){
     
         const result = await response.json();
         console.log(result)
-        console.log("Upload ID: ", result["items"][0]["contentDetails"]["relatedPlaylists"]["uploads"]);
+        // console.log("Upload ID: ", result["items"][0]["contentDetails"]["relatedPlaylists"]["uploads"]);
         const uploadId =  result["items"][0]["contentDetails"]["relatedPlaylists"]["uploads"];
         
         
@@ -35,21 +38,36 @@ export function YoutubeScreen(props){
         const result2 = await response2.json();
         console.log("Uploads Result",result2)
 
+        let tempArray = []
+        let i = 1;
+        result2["items"].forEach(element => {
+          
+          let videoLink = 'https://www.youtube.com/watch?v=' + element['snippet']['resourceId']['videoId']
+          videoLink = videoLink.toString()
+          
+          tempArray.push({'videoTitle' : element['snippet']['title'], 'id': i, 'videoLink':videoLink})
+          i = i + 1
+        });
+
+        setData(tempArray);
+        
       };
-      
-    
-    
-    
+
     return(
     <View style={styles.container}>
+
+        <FlatList 
+          data={data}
+          renderItem={({item}) => (<Tiles title= {item.videoTitle} videoLink={item.videoLink} />)}
+        />
+
         <Button
-          title="Get Naval Ravikant data"
+          title="Get Youtube data"
           style={styles.button}
           onPress={() => {
             getChannelData(NavalChannelID);
-          }}>
-          
-        </Button>
+          }}/>
+  
         <StatusBar style="auto" />
       </View>
     );

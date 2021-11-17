@@ -1,49 +1,52 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { Button } from 'react-native-elements';
 import { getSavedPosts, savePost, storeData }from '../src/Stoarge';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as firebaseFunctions from '../src/FirebaseApi.js'
+import {PostPanel} from '../components/PostPanelComponent';
+
 
 
 export function SaveScreen(props){
-    const [savedPostsId, setSavedPostsId] = useState([]);
+    
     const [savedPosts, setSavedPosts] = useState([]);
 
     const getPosts = async()=>{
-      const result = await AsyncStorage.getItem("@storage_Key")
-      
-      setSavedPostsId(result)
-      console.log("Saved Posts in Async Storage", result)
+      const result = await getSavedPosts();
 
       let temp = await firebaseFunctions.getPostsFromList(result)
       
       setSavedPosts(temp)
 
-      console.log("Saved Posts from Firebase",temp)
+      console.log("Saved Posts fetched from Firebase", temp)   
     };
 
-
+    const renderItem = (item) =>{
+      <PostPanel title={item.title} body={item.body} />
+    }
     return(
       <View>
-        <Text>
-           {savedPostsId}
-        </Text>
+        <FlatList
+          data={savedPosts}
+          // renderItem={({item}) => ( <Text>{item.title}</Text> )}
+          renderItem={({item}) => (<PostPanel  title={item.title} body={item.body} />)}
+          keyExtractor={item => item.id.toString()}
+        />
         <Button
-        title="REFRESH TO GET POSTS"
-        // style={styles.button}
-        style={{width: 420, height: 50}}
-        onPress={()=>getPosts()}
+          title="REFRESH TO GET POSTS"
+          // style={styles.button}
+          style={{width: 420, height: 50}}
+          onPress={()=>getPosts()}
         />
 
         <Button
-          title="DEMO DELETE SAVED POSTS"
+          title="DELETE ALL SAVED POSTS"
           style={styles.button}
           onPress={()=>storeData([])}
         />
-
-        
+               
       </View>
     );
 }

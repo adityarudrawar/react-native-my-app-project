@@ -16,7 +16,10 @@ export function SaveButton(props){
     useEffect(async ()=>{
         let savedPosts = await getSavedPosts();
         // console.log("Saved Posts",savedPosts);
-        if (savedPosts.includes(props.documentId) ){
+        if (savedPosts ==[]){
+            return
+        }
+        if (!savedPosts ==[] && savedPosts.includes(props.documentId) ){
             setButtonText(unsaveText)
             setSaveState(true)
         }else{

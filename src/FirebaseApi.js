@@ -67,7 +67,6 @@ export const getPostsFromList = async(listOfDocuments) =>{
   let querySnapshot = await getDocs(collection(firestore, "Posts"));
   let i = 0
   querySnapshot.forEach((doc)=>{
-    console.log( doc.id);
     if (listOfDocuments.includes(doc.id)){
         tempArray.push({
                         title: doc.data().title, 
@@ -76,10 +75,9 @@ export const getPostsFromList = async(listOfDocuments) =>{
                         documentId: doc.id
                         })
       i = i + 1
-    } else{
-      console.log(doc.id, "Not saved")
-    }
+    } 
           })
+    return tempArray
 }
 
 
