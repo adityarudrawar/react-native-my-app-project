@@ -1,7 +1,7 @@
 // import { StatusBar } from 'expo-status-bar';
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, View, FlatList, Button } from 'react-native';
-
+import { StyleSheet, View, FlatList } from 'react-native';
+import {Button} from 'react-native-elements';
 import { savePost } from '../src/Stoarge';
 import {PostPanel} from '../components/Post-Panel'
 
@@ -34,11 +34,13 @@ export function HomeScreen(props){
                   keyExtractor={item => item.id.toString()}
         />
       </View>
-      {/* <Button 
-                title="Refresh to get posts"
-                style={{width: 10, height: 10}}
-                onPress={ ()=> getData()}>
-      </Button> */}
+      {/* <View>
+        <Button 
+                  title="Refresh to get Updated posts"
+                  style={{width: 10, height: 10}}
+                  onPress={ ()=> getData()}>
+        </Button>
+      </View> */}
     </View>
   );
 }
