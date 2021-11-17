@@ -1,8 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState, useEffect} from 'react';
 import { StyleSheet, Keyboard, Text, View, TextInput, TouchableOpacity, SafeAreaView, FlatList } from 'react-native';
-import { Button, Overlay  } from 'react-native-elements';
+import { Button, Overlay, Card  } from 'react-native-elements';
 import { Octicons } from '@expo/vector-icons';
+
 
 import * as firebaseFunctions from '../src/FirebaseApi.js'
 import { BackgroundImage } from 'react-native-elements/dist/config';
@@ -50,7 +51,7 @@ export function Comment(props) {
                 <Text>These are the comments for Post {props.postTitle}</Text>
                 <FlatList
                         data={comments}
-                        renderItem={({item}) => ( <Text>{item.title}</Text> )}
+                        renderItem={({item}) => ( <Card style={{height:50}}><Text>{item.title}</Text></Card> )}
                         // renderItem={renderItem}
                         keyExtractor={(item)=>item.id.toString()}
                 ></FlatList>  

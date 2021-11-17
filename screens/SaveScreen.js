@@ -3,15 +3,19 @@ import React, {useState, useEffect} from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { Button } from 'react-native-elements';
 import { getSavedPosts, savePost, storeData }from '../src/Stoarge';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import * as firebaseFunctions from '../src/FirebaseApi.js'
 import {PostPanel} from '../components/PostPanelComponent';
 
 
 
 export function SaveScreen(props){
+
+    
     
     const [savedPosts, setSavedPosts] = useState([]);
+   
+
 
     const getPosts = async()=>{
       const result = await getSavedPosts();
@@ -31,7 +35,7 @@ export function SaveScreen(props){
         <FlatList
           data={savedPosts}
           // renderItem={({item}) => ( <Text>{item.title}</Text> )}
-          renderItem={({item}) => (<PostPanel  title={item.title} body={item.body} />)}
+          renderItem={({item}) => (<PostPanel  title={item.title} body={item.body} documentId={item.documentId}/>)}
           keyExtractor={item => item.id.toString()}
         />
         <Button
@@ -46,7 +50,7 @@ export function SaveScreen(props){
           style={styles.button}
           onPress={()=>storeData([])}
         />
-               
+
       </View>
     );
 }

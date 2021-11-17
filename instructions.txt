@@ -1,5 +1,2 @@
-1. Border Radius
-2. UI elements.
-3. Colour Grading/Combinations.
-4. Splash Screen.
-5. Drop Shadow.
+1. Login into your expo dev account by using `expo login` in the cli.
+enter crendentials and after login `expo start`
