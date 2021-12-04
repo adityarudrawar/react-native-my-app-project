@@ -4,7 +4,7 @@ import { FlatList, StyleSheet, Text, View, Linking } from 'react-native';
 import { Button } from 'react-native-elements';
 import { Tiles } from '../components/Tiles';
 
-const API_KEY = "AIzaSyBpTB6k92gzBxlXqkDjHo3f8BC9GiGWeLc"
+const API_KEY = ""
 
 const NavalChannelID = 'UCh_dVD10YuSghle8g6yjePg'
 
